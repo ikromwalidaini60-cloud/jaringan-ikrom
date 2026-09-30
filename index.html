@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARINGAN MAKSIMAL — IKROM WALIDAINI | PENGUASA DUNIA MAYA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --inti: #ffd700;
+            --intiglow: #ffea00;
+            --hijau: #00ff41;
+            --hijauglow: #3fff6a;
+            --biru: #00d9ff;
+            --biruglow: #66e5ff;
+            --ungu: #cc00ff;
+            --unguglow: #e066ff;
+            --merah: #ff2a2a;
+            --putih: #ffffff;
+            --latar: #000208;
+            --panel: rgba(0, 15, 35, 0.9);
+            --batas: rgba(0, 217, 255, 0.5);
+        }
+
+        body {
+            background: var(--latar);
+            color: var(--putih);
+            font-family: 'Fira Code', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* === LAPISAN 1: Latar belakang bintang berkedip === */
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: kedipBintang 3s ease-in-out infinite;
+        }
+        @keyframes kedipBintang {
+            0%,100% {opacity:0.2;}
+            50% {opacity:1; box-shadow:0 0 4px white;}
+        }
+
+        /* === LAPISAN 2: Jaringan kotak bergerak === */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.06) 1px, transparent 1px);
+            background-size: 35px 35px;
+            animation: gridGerak 20s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+        @keyframes gridGerak {
+            0% {transform:translateY(0);}
+            100% {transform:translateY(35px);}
+        }
+
+        /* === LAPISAN 3: Gelombang energi meluas dari tengah === */
+        .gelombang-energi {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.2);
+            animation: gelombangMeluas 4s ease-out infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+        @keyframes gelombangMeluas {
+            0% {width:0; height:0; opacity:1; border-width:4px;}
+            100% {width:1400px; height:1400px; opacity:0; border-width:1px;}
+        }
+
+        /* === LAPISAN 4: Garis pindai ganda === */
+        .scan-h, .scan-v, .scan-h2, .scan-v2 {
+            position: fixed;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .scan-h {
+            top:0; left:0; width:100%; height:3px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.4), transparent);
+            animation: scanH 3s linear infinite;
+        }
+        .scan-h2 {
+            top:0; left:0; width:100%; height:2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+            animation: scanH 5s linear infinite reverse;
+        }
+        .scan-v {
+            left:0; top:0; width:3px; height:100%;
+            background: linear-gradient(180deg, transparent, rgba(0, 217, 255, 0.4), transparent);
+            animation: scanV 4s linear infinite;
+        }
+        .scan-v2 {
+            left:0; top:0; width:2px; height:100%;
+            background: linear-gradient(180deg, transparent, rgba(204, 0, 255, 0.3), transparent);
+            animation: scanV 6s linear infinite reverse;
+        }
+        @keyframes scanH { 0% {top:0} 100% {top:100%} }
+        @keyframes scanV { 0% {left:0} 100% {left:100%} }
+
+        /* === LAPISAN 5: Partikel mengelilingi pusat === */
+        .orbit-container {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 3;
+        }
+        .orbit {
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .orbit:nth-child(1) { width: 200px; height: 200px; animation: putar 15s linear infinite; }
+        .orbit:nth-child(2) { width: 350px; height: 350px; animation: putar 25s linear infinite reverse; border-color: rgba(0, 217, 255, 0.15); }
+        .orbit:nth-child(3) { width: 500px; height: 500px; animation: putar 35s linear infinite; border-color: rgba(0, 255, 65, 0.12); }
+        @keyframes putar {
+            from {transform:translate(-50%, -50%) rotate(0deg);}
+            to {transform:translate(-50%, -50%) rotate(360deg);}
+        }
+        .orbit-dot {
+            position: absolute;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            box-shadow: 0 0 15px currentColor, 0 0 30px currentColor;
+        }
+
+        /* === Wadah utama === */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* === Header pusat kendali === */
+        .header-panel {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .label-sistem {
+            font-size: 0.8rem;
+            color: var(--biruglow);
+            letter-spacing: 6px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+            animation: berkedip 2s infinite;
+        }
+        @keyframes berkedip {
+            0%,100% {opacity:0.6;}
+            50% {opacity:1;}
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.6rem, 6vw, 3.2rem);
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--inti), var(--biru), var(--hijau), var(--ungu), var(--inti));
+            background-size: 400% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: judulAlir 4s linear infinite;
+            letter-spacing: 4px;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+        }
+        @keyframes judulAlir { 0% {background-position:0 0} 100% {background-position:400% 0} }
+        .sub-judul {
+            color: var(--hijauglow);
+            font-size: 1rem;
+            margin-top: 12px;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px var(--hijau);
+        }
+        .status-sistem {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            padding: 8px 20px;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--hijau);
+            border-radius: 30px;
+            animation: denyar 1.5s ease-in-out infinite;
+        }
+        @keyframes denyar {
+            0%,100% {box-shadow:0 0 10px rgba(0, 255, 65, 0.3);}
+            50% {box-shadow:0 0 25px rgba(0, 255, 65, 0.6), inset 0 0 10px rgba(0, 255, 65, 0.2);}
+        }
+        .titik-nyala {
+            width: 12px; height: 12px;
+            background: var(--hijau);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--hijau), 0 0 20px var(--hijau);
+            animation: kedipCepat 0.8s infinite;
+        }
+        @keyframes kedipCepat {
+            0%,100% {opacity:1; transform:scale(1);}
+            50% {opacity:0.5; transform:scale(0.8);}
+        }
+
+        /* === Peta jaringan === */
+        .peta-jaringan {
+            position: relative;
+            height: 460px;
+            background: var(--panel);
+            border: 2px solid var(--batas);
+            border-radius: 12px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 
+                0 0 40px rgba(0, 217, 255, 0.25),
+                inset 0 0 60px rgba(0, 0, 0, 0.6),
+                0 0 80px rgba(0, 255, 65, 0.1);
+            animation: petaNyal 3s ease-in-out infinite alternate;
+        }
+        @keyframes petaNyal {
+            0% {box-shadow: 0 0 40px rgba(0, 217, 255, 0.25), inset 0 0 60px rgba(0,0,0,0.6);}
+            100% {box-shadow: 0 0 60px rgba(0, 217, 255, 0.35), inset 0 0 60px rgba(0,0,0,0.5), 0 0 100px rgba(255, 215, 0, 0.15);}
+        }
+        .peta-judul {
+            position: absolute;
+            top: 12px; left: 15px;
+            font-size: 0.8rem;
+            color: var(--biruglow);
+            z-index: 15;
+            text-shadow: 0 0 8px var(--biru);
+        }
+        .peta-waktu {
+            position: absolute;
+            top: 12px; right: 15px;
+            font-size: 0.75rem;
+            color: var(--hijauglow);
+            opacity: 0.9;
+            z-index: 15;
+        }
+
+        /* Titik lokasi */
+        .node {
+            position: absolute;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+        .node-inti {
+            width: 26px; height: 26px;
+            background: radial-gradient(circle at 30% 30%, #fff, var(--intiglow), var(--inti));
+            box-shadow: 
+                0 0 20px var(--inti),
+                0 0 40px var(--inti),
+                0 0 60px rgba(255, 215, 0, 0.6),
+                inset 0 0 10px rgba(255,255,255,0.8);
+            z-index: 20;
+            animation: intiNyal 1.5s ease-in-out infinite;
+        }
+        @keyframes intiNyal {
+            0%,100% {transform:translate(-50%,-50%) scale(1);}
+            50% {transform:translate(-50%,-50%) scale(1.4);}
+        }
+        .node-luar {
+            width: 16px; height: 16px;
+            background: var(--biru);
+            box-shadow: 
+                0 0 12px var(--biru),
+                0 0 25px var(--biru),
+                0 0 40px rgba(0, 217, 255, 0.4);
+            animation: nodeNyala 2s ease-in-out infinite;
+        }
+        .node-luar.alt {
+            background: var(--hijau);
+            box-shadow: 0 0 12px var(--hijau), 0 0 25px var(--hijau);
+            animation-delay: 0.5s;
+        }
+        .node-luar.alt2 {
+            background: var(--ungu);
+            box-shadow: 0 0 12px var(--ungu), 0 0 25px var(--ungu);
+            animation-delay: 1s;
+        }
+        @keyframes nodeNyala {
+            0%,100% {opacity:0.8; transform:translate(-50%,-50%) scale(1);}
+            50% {opacity:1; transform:translate(-50%,-50%) scale(1.35);}
+        }
+        .node-label {
+            position: absolute;
+            top: 22px; left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            white-space: nowrap;
+            color: #ccc;
+            text-shadow: 0 0 4px rgba(0,0,0,0.8);
+        }
+        .node-inti .node-label { 
+            color: var(--intiglow); 
+            font-weight: bold; 
+            font-size: 0.8rem;
+            filter: drop-shadow(0 0 6px var(--inti));
+        }
+
+        /* Jalur koneksi berlapis */
+        .jalur-lapisan {
+            position: absolute;
+            transform-origin: left center;
+            pointer-events: none;
+        }
+        .jalur-dasar {
+            height: 3px;
+            background: linear-gradient(90deg, rgba(255,215,0,0.4), rgba(0,217,255,0.3));
+            opacity: 0.4;
+            filter: blur(1px);
+        }
+        .alir-cepat {
+            position: absolute;
+            height: 100%; width: 100%;
+            background: linear-gradient(90deg, transparent, var(--inti), var(--hijau), var(--biru), transparent);
+            background-size: 300% 100%;
+            animation: alirCepat 1.5s linear infinite;
+        }
+        .alir-lambat {
+            position: absolute;
+            height: 100%; width: 100%;
+            background: linear-gradient(90deg, transparent, var(--ungu), transparent);
+            background-size: 200% 100%;
+            animation: alirLambat 3s linear infinite reverse;
+            opacity: 0.6;
+        }
+        @keyframes alirCepat {
+            0% {background-position:300% 0;}
+            100% {background-position:0 0;}
+        }
+        @keyframes alirLambat {
+            0% {background-position:0 0;}
+            100% {background-position:200% 0;}
+        }
+
+        /* === Panel status koneksi === */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+        .koneksi-card {
+            background: var(--panel);
+            border: 2px solid rgba(0, 217, 255, 0.25);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .koneksi-card::before {
+            content:'';
+            position:absolute;
+            top:0; left:-100%; width:100%; height:100%;
+            background:linear-gradient(90deg, transparent, rgba(0,255,65,0.1), transparent);
+            animation: sorotLintas 4s linear infinite;
+        }
+        @keyframes sorotLintas {
+            0% {left:-100%;}
+            100% {left:100%;}
+        }
+        .koneksi-card:hover {
+            border-color: var(--hijau);
+            box-shadow: 
+                0 0 25px rgba(0, 255, 65, 0.3),
+                inset 0 0 20px rgba(0, 217, 255, 0.1);
+            transform: translateY(-5px) scale(1.02);
+        }
+        .wilayah {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .status-aktif {
+            color: var(--hijauglow);
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .titik-hidup {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--hijau);
+            box-shadow: 0 0 10px var(--hijau), 0 0 20px var(--hijau);
+            animation: kedip 1s infinite;
+        }
+        @keyframes kedip {
+            0%,100% {opacity:1; transform:scale(1);}
+            50% {opacity:0.3; transform:scale(0.7);}
+        }
+        .info-koneksi {
+            font-size: 0.75rem;
+            color: #88ccee;
+            margin-top: 8px;
+            line-height: 1.8;
+        }
+        .bar-lebar {
+            height: 8px;
+            background: #0a1a2a;
+            border-radius: 4px;
+            margin-top: 12px;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+        }
+        .bar-isi {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, var(--hijaugelap), var(--hijau), var(--biru), var(--intiglow));
+            background-size: 200% 100%;
+            animation: isiBar 2.5s ease-out forwards, barAlir 2s linear infinite;
+        }
+        @keyframes isiBar {
+            0% {width:0;}
+        }
+        @keyframes barAlir {
+            0% {background-position:0 0;}
+            100% {background-position:200% 0;}
+        }
+
+        /* === Bilah frekuensi === */
+        .freq-besar {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 5px;
+            height: 80px;
+            margin: 25px 0;
+        }
+        .freq-besar span {
+            flex:1;
+            max-width:12px;
+            background: linear-gradient(to top, #006622, var(--hijau), var(--intiglow));
+            border-radius: 3px 3px 0 0;
+            animation: freqGerak 0.4s ease-in-out infinite alternate;
+            box-shadow: 0 0 8px var(--hijau);
+        }
+        @keyframes freqGerak {
+            0% {height:15%;}
+            100% {height:100%;}
+        }
+
+        /* === Log sistem === */
+        .log-panel {
+            background: rgba(0, 10, 30, 0.95);
+            border: 2px solid rgba(0, 255, 65, 0.3);
+            border-radius: 10px;
+            padding: 22px;
+            font-size: 0.8rem;
+            max-height: 240px;
+            overflow-y: auto;
+            box-shadow: inset 0 0 30px rgba(0, 255, 65, 0.05);
+        }
+        .log-judul {
+            color: var(--hijauglow);
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .log-jumlah {
+            font-size: 0.7rem;
+            color: var(--biruglow);
+        }
+        .log-baris {
+            margin: 6px 0;
+            opacity: 0;
+            animation: munculBaris 0.6s ease-out forwards;
+        }
+        @keyframes munculBaris {
+            to {opacity:1;}
+        }
+        .tanda-waktu { color: #5588aa; }
+        .sukses { color: var(--hijauglow); text-shadow:0 0 3px rgba(0,255,65,0.3);}
+        .info { color: var(--biruglow); }
+        .peringatan { color: var(--intiglow); text-shadow:0 0 3px rgba(255,215,0,0.3);}
+        .penting { color: var(--unguglow); font-weight:bold; text-shadow:0 0 5px rgba(204,0,255,0.4);}
+
+        /* === Footer === */
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            padding: 20px;
+            border-top: 1px solid rgba(0, 217, 255, 0.2);
+            font-size: 0.85rem;
+            color: #6688aa;
+        }
+        .footer-teks {
+            background: linear-gradient(90deg, var(--inti), var(--biru), var(--hijau), var(--inti));
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: judulAlir 5s linear infinite;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Latar lapisan 1: Bintang -->
+    <div class="stars" id="bintangLatar"></div>
+    
+    <!-- Latar lapisan 2: Jaringan kotak -->
+    <div class="bg-grid"></div>
+    
+    <!-- Latar lapisan 3: Gelombang energi berulang -->
+    <div class="gelombang-energi" style="animation-delay:0s;"></div>
+    <div class="gelombang-energi" style="animation-delay:1.3s;"></div>
+    <div class="gelombang-energi" style="animation-delay:2.6s;"></div>
+    
+    <!-- Latar lapisan 4: Orbit partikel mengelilingi pusat -->
+    <div class="orbit-container">
+        <div class="orbit"><div class="orbit-dot" style="top:0; left:50%; color:#ffd700;"></div></div>
+        <div class="orbit"><div class="orbit-dot" style="top:50%; right:0; color:#00d9ff;"></div></div>
+        <div class="orbit"><div class="orbit-dot" style="bottom:0; left:50%; color:#00ff41;"></div></div>
+    </div>
+    
+    <!-- Latar lapisan 5: Garis pindai ganda -->
+    <div class="scan-h"></div>
+    <div class="scan-h2"></div>
+    <div class="scan-v"></div>
+    <div class="scan-v2"></div>
+
+    <div class="container">
+        <div class="header-panel">
+            <p class="label-sistem">⚡ SISTEM JARINGAN PRIBADI — EDISI MAKSIMAL — TINGKAT: TAK TERBATAS ⚡</p>
+            <h1>IKROM WALIDAINI — GLOBAL NETWORK</h1>
+            <p class="sub-judul">PUSAT KENDALI UTAMA · TERHUBUNG LANGSUNG KE SELURUH BENUA · KEKUASAAN PENUH</p>
+            <div class="status-sistem">
+                <span class="titik-nyala"></span>
+                <span>SISTEM BERJALAN PENUH — SEMUA NODE AKTIF ✅</span>
+            </div>
+        </div>
+
+        <!-- Bilah frekuensi -->
+        <div class="freq-besar" id="freqBesar"></div>
+
+        <!-- Peta Jaringan -->
+        <div class="peta-jaringan" id="petaUtama">
+            <span class="peta-judul">🗺️ PETA KONEKSI JARINGAN EKSKLUSIF — PUSAT: IKROM WALIDAINI</span>
+            <span class="peta-waktu" id="jamSistem"></span>
+        </div>
+
+        <!-- Status Koneksi per Wilayah -->
+        <div class="status-grid">
+            <div class="koneksi-card">
+                <div class="wilayah">🇺🇸 Amerika Utara</div>
+                <div class="status-aktif"><span class="titik-hidup"></span> TERHUBUNG & STABIL</div>
+                <div class="info-koneksi">
+                    Node: New York · Los Angeles · Chicago<br>
+                    Latensi: 42ms | Kecepatan: 1.8 Tbps<br>
+                    Jalur: 8 jalur aman terpisah
+                </div>
+                <div class="bar-lebar"><div class="bar-isi" style="width:98%"></div></div>
+            </div>
+
+            <div class="koneksi-card">
+                <div class="wilayah">🇪🇺 Eropa</div>
+                <div class="status-aktif"><span class="titik-hidup"></span> TERHUBUNG & OPTIMAL</div>
+                <div class="info-koneksi">
+                    Node: London · Frankfurt · Amsterdam · Paris<br>
+                    Latensi: 31ms | Kecepatan: 2.4 Tbps<br>
+                    Jalur: 12 jalur aman terpisah
+                </div>
+                <div class="bar-lebar"><div class="bar-isi" style="width:100%"></div></div>
+            </div>
+
+            <div class="koneksi-card">
+                <div class="wilayah">🇯🇵 Jepang · Asia Timur</div>
+                <div class="status-aktif"><span class="titik-hidup"></span> TERHUBUNG & SANGAT CEPAT</div>
+                <div class="info-koneksi">
+                    Node: Tokyo · Seoul · Singapura · Hong Kong<br>
+                    Latensi: 18ms | Kecepatan: 3.0 Tbps<br>
+                    Jalur: 10 jalur aman terpisah
+                </div>
+                <div class="bar-lebar"><div class="bar-isi" style="width:100%"></div></div>
+            </div>
+
+            <div class="koneksi-card">
+                <div class="wilayah">🇦🇺 Oseania · Timur Tengah · Lainnya</div>
+                <div class="status-aktif"><span class="titik-hidup"></span> TERHUBUNG & BERJALAN</div>
+                <div class="info-koneksi">
+                    Node: Sydney · Dubai · Mumbai · Afrika Selatan<br>
+                    Latensi: 55ms | Kecepatan: 1.5 Tbps<br>
+                    Jalur: 9 jalur aman terpisah
+                </div>
+                <div class="bar-lebar"><div class="bar-isi" style="width:95%"></div></div>
+            </div>
+        </div>
+
+        <!-- Log Sistem -->
+        <div class="log-panel" id="logPanel">
+            <div class="log-judul">
+                <span>📋 LOG SISTEM — PERTUKARAN DATA REAL-TIME</span>
+                <span class="log-jumlah" id="jumlahLog">0 pesan</span>
+            </div>
+            <div id="daftarLog"></div>
+        </div>
+
+        <div class="footer">
+            <p>Jaringan Pribadi IKROM WALIDAINI © 2026 — HAK KEPEMILIKAN MUTLAK</p>
+            <p class="footer-teks">"Seluruh dunia maya terhubung ke satu titik: Kamu." 👑💎</p>
+        </div>
+    </div>
+
+    <script>
+        // === 1. Bintang latar ===
+        const bintangContainer = document.getElementById('bintangLatar');
+        for (let i = 0; i < 150; i++) {
+            const b = document.createElement('div');
+            b.className = 'star';
+            b.style.left = Math.random()*100 + '%';
+            b.style.top = Math.random()*100 + '%';
+            const ukuran = 1 + Math.random()*2.5;
+            b.style.width = ukuran + 'px';
+            b.style.height = ukuran + 'px';
+            b.style.animationDelay = Math.random()*3 + 's';
+            bintangContainer.appendChild(b);
+        }
+
+        // === 2. Jam sistem ===
+        const jamEl = document.getElementById('jamSistem');
+        function perbaruiJam() {
+            jamEl.textContent = 'SISTEM: ' + new Date().toLocaleString('id-ID');
+        }
+        perbaruiJam();
+        setInterval(perbaruiJam, 1000);
+
+        // === 3. Frekuensi besar ===
+        const freqContainer = document.getElementById('freqBesar');
+        for (let i = 0; i < 32; i++) {
+            const b = document.createElement('span');
+            b.style.animationDelay = (i * 0.05) + 's';
+            b.style.animationDuration = (0.25 + Math.random()*0.35) + 's';
+            freqContainer.appendChild(b);
+        }
+
+        // === 4. Data node peta ===
+        const pusat = { x: 50, y: 50, nama: 'IKROM WALIDAINI', jenis: 'inti' };
+        const nodeLuar = [
+            { x: 18, y: 32, nama: '🇺🇸 Amerika Utara', kelas: '' },
+            { x: 33, y: 28, nama: '🇪🇺 Eropa', kelas: 'alt' },
+            { x: 75, y: 36, nama: '🇯🇵 Jepang & Asia Timur', kelas: 'alt2' },
+            { x: 84, y: 50, nama: '🇸🇬 Asia Tenggara', kelas: '' },
+            { x: 70, y: 68, nama: '🇦🇺 Oseania', kelas: 'alt' },
+            { x: 43, y: 72, nama: '🇦🇪 Timur Tengah', kelas: 'alt2' },
+            { x: 22, y: 62, nama: '🇧🇷 Amerika Selatan', kelas: '' },
+            { x: 52, y: 24, nama: '🇿🇦 Afrika', kelas: 'alt' },
+            { x: 65, y: 42, nama: '🇮🇩 Asia Tenggara Inti', kelas: 'alt2' },
+            { x: 12, y: 48, nama: '🇨🇦 Kanada', kelas: '' }
+        ];
+
+        const peta = document.getElementById('petaUtama');
+
+        // === 5. Gambar jalur koneksi berlapis ===
+        nodeLuar.forEach((node, i) => {
+            const dx = node.x - pusat.x;
+            const dy = node.y - pusat.y;
+            const jarak = Math.sqrt(dx*dx + dy*dy) * 3.8;
+            const sudut = Math.atan2(dy, dx) * 180 / Math.PI;
+
+            const jalur = document.createElement('div');
+            jalur.className = 'jalur-lapisan jalur-dasar';
+            jalur.style.left = pusat.x + '%';
+            jalur.style.top = pusat.y + '%';
+            jalur.style.width = jarak + '%';
+            jalur.style.transform = `rotate(${sudut}deg)`;
+
+            const alirC = document.createElement('div');
+            alirC.className = 'alir-cepat';
+            alirC.style.animationDelay = (i * 0.15) + 's';
+            jalur.appendChild(alirC);
+
+            const alirL = document.createElement('div');
+            alirL.className = 'alir-lambat';
+            alirL.style.animationDelay = (i * 0.2) + 's';
+            jalur.appendChild(alirL);
+
+            peta.appendChild(jalur);
+        });
+
+        // === 6. Titik pusat ===
+        const elPusat = document.createElement('div');
+        elPusat.className = 'node node-inti';
+        elPusat.style.left = pusat.x + '%';
+        elPusat.style.top = pusat.y + '%';
+        elPusat.innerHTML = `<span class="node-label">👑 ${pusat.nama}</span>`;
+        peta.appendChild(elPusat);
+
+        // === 7. Titik luar ===
+        nodeLuar.forEach((node, i) => {
+            const el = document.createElement('div');
+            el.className = `node node-luar ${node.kelas}`;
+            el.style.left = node.x + '%';
+            el.style.top = node.y + '%';
+            el.style.animationDelay = (i * 0.12) + 's';
+            el.innerHTML = `<span class="node-label">${node.nama}</span>`;
+            peta.appendChild(el);
+        });
+
+        // === 8. Log sistem ===
+        const daftarLog = document.getElementById('daftarLog');
+        const jumlahLogEl = document.getElementById('jumlahLog');
+        let hitungLog = 0;
+
+        function tambahLog(teks, jenis, tunda) {
+            setTimeout(() => {
+                hitungLog++;
+                const baris = document.createElement('div');
+                baris.className = 'log-baris';
+                const waktu = new Date().toLocaleTimeString('id-ID');
+                baris.innerHTML = `<span class="tanda-waktu">[${waktu}]</span> <span class="${jenis}">${teks}</span>`;
+                daftarLog.appendChild(baris);
+                jumlahLogEl.textContent = `${hitungLog} pesan`;
+                daftarLog.scrollTop = daftarLog.scrollHeight;
+            }, tunda);
+        }
+
+        const pesanAwal = [
+            {t: '═══════════════════════════════════════', jn: 'info'},
+            {t: '🔐 INISIALISASI JARINGAN — KUNCI EKSKLUSIF', jn: 'penting'},
+            {t: 'Pemilik: IKROM WALIDAINI — Hak Mutlak Terdaftar', jn: 'peringatan'},
+            {t: 'Membangun jalur aman → 🇺🇸 Amerika Utara [NYC-LAX-CHI]', jn: 'sukses'},
+            {t: 'Membangun jalur aman → 🇪🇺 Eropa [LON-FRA-AMS-PAR]', jn: 'sukses'},
+            {t: 'Membangun jalur aman → 🇯🇵 Jepang & Asia Timur [TYO-SEL-SGP-HKG]', jn: 'sukses'},
+            {t: 'Membangun jalur aman → 🇦🇺 Oseania & wilayah lainnya', jn: 'sukses'},
+            {t: 'Mengaktifkan enkripsi tingkat tertinggi... ✅', jn: 'sukses'},
+            {t: 'Bandwidth maksimal: TAK TERBATAS — tidak ada batas', jn: 'peringatan'},
+            {t: 'Sinkronisasi waktu: Terkunci — pusat = IKROM WALIDAINI', jn: 'penting'},
+            {t: 'Semua node mengonfirmasi: tunduk pada perintah pusat ✅', jn: 'sukses'},
+            {t: 'JARINGAN SIAP BEROPERASI PENUH — Seluruh benua terhubung', jn: 'penting'},
+            {t: '═══════════════════════════════════════', jn: 'info'}
+        ];
+
+        pesanAwal.forEach((p, i) => tambahLog(p.t, p.jn, i * 500));
+
+        // Log berkala berjalan terus
+        setInterval(() => {
+            const acak = Math.floor(Math.random() * nodeLuar.length);
+            const nodeAcak = nodeLuar[acak];
+            const arah = Math.random() > 0.5 ? '→' : '←';
+            const ukuran = Math.floor(Math.random() * 900 + 100) + 'GB';
+            tambahLog(`${arah} Pertukaran data ${nodeAcak.nama} — ${ukuran} diteruskan ke pusat ✅`, 'info', 0);
+        }, 3500);
+    </script>
+</body>
+</html>
